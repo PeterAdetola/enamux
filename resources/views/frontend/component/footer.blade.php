@@ -45,12 +45,12 @@ $testimonials = App\Models\Testimonial::all();
                                             <p>{{ $testimonial->content }}</p>
                                             <div class="info">
           @if($testimonial->image)
-                                                <div class="author-img"> <img src="{{ url($testimonial->image) }}" alt=""> </div>
+                                        <div class="author-img"> <img src="{{ url($testimonial->image) }}" alt=""> </div>
           @else
                                         <div class="initial-avatar" style="margin-bottom: -3em">{{ $testimonial->initials }}</div>
           @endif
                                                 <div class="cont">
-                                                    <h6>{{ $testimonial->name }}</h6> 
+                                                    <h6>{{ $testimonial->name }}</h6>
                                                     <span>{{ $testimonial->role }}</span>
                                                 </div>
                                             </div>
@@ -73,7 +73,7 @@ $testimonials = App\Models\Testimonial::all();
     @if(count($clients) > 0)
     @foreach($clients as $client)
                                 <div class="clients-logo">
-                                    <a href="{{ $client->name }}"><img src="{{ url($client->image) }}" alt="{{ $client->name }}"></a>
+                                    <a href="#!"><img src="{{ url($client->image) }}" alt="{{ $client->name }}"></a>
                                 </div>
     @endforeach
     @endif
@@ -109,7 +109,7 @@ $testimonials = App\Models\Testimonial::all();
                                 </div>
             @php
                 $email = $contact->email;
-                $emails = preg_split("#(?<=$separators)#", $email); 
+                $emails = preg_split("#(?<=$separators)#", $email);
             @endphp
                             @foreach($emails as $email)
                                 <p><a href="mailto:{{ strip_tags($email) }}">{{ strip_tags($email) }}</a></p>
@@ -122,7 +122,7 @@ $testimonials = App\Models\Testimonial::all();
                                 <div class="fothead">
                                     <h6>Our Address</h6>
                                 </div>
-                                <p>{{ $contact->address }}</p>
+                                <p>{!! $contact->address !!}</p>
                             </div>
                         </div>
                     @endif
@@ -135,26 +135,26 @@ $testimonials = App\Models\Testimonial::all();
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="text-left">
-                                    <p>© <span id="currentYear"></span> <b ><a style="color: grey;" onclick="return false" ondblclick="location=this.href" href="{{ url('login') }}">Geosunny & Partners.</a></b> All right reserved.</p>
+                                    <p>© <span id="currentYear"></span> <b ><a style="color: grey;" onclick="return false" ondblclick="location=this.href" href="{{ url('login') }}">Enamux Limited.</a></b> All right reserved.</p>
                                 </div>
                             </div>
                             <div class="col-md-4 abot">
-                                <div class="social-icon"> 
+                                <div class="social-icon">
     @foreach($smedia as $smedia)
         @if($smedia->name === 'Facebook')
-                                    <a href="{{ $smedia->link }}"><i class="ti-facebook"></i></a> 
+                                    <a href="{{ $smedia->link }}"><i class="ti-facebook"></i></a>
         @elseif($smedia->name === 'LinkedIn')
-                                    <a href="{{ $smedia->link }}"><i class="ti-linkedin"></i></a> 
+                                    <a href="{{ $smedia->link }}"><i class="ti-linkedin"></i></a>
         @elseif($smedia->name === 'Instagram')
-                                    <a href="{{ $smedia->link }}"><i class="ti-instagram"></i></a> 
+                                    <a href="{{ $smedia->link }}"><i class="ti-instagram"></i></a>
         @elseif($smedia->name === 'Twitter')
-                                    <a href="{{ $smedia->link }}"><i class="ti-twitter"></i></a> 
+                                    <a href="{{ $smedia->link }}"><i class="ti-twitter"></i></a>
         @endif
     @endforeach
                                 </div>
                             </div>
                             <div class="col-md-4">
-                            <p> Made by Pacmedia Creatives</p> 
+                            <p><a href="https://thepacmedia.com/" style="text-decoration: none"> Made by Pacmedia Creatives</a></p>
                         </div>
                         </div>
                     </div>
@@ -167,15 +167,4 @@ $testimonials = App\Models\Testimonial::all();
                                         const yearElement = document.getElementById("currentYear");
                                         yearElement.textContent = currentYear;
 
-
-                                        // Admin Gateway
-
-                                        // jQuery(function($) {
-                                        //     $('#login').click(function() {
-                                        //         return false;
-                                        //     }).dblclick(function() {
-                                        //         window.location = this.href;
-                                        //         return false;
-                                        //     });
-                                        // });
                                     </script>

@@ -37,8 +37,9 @@ class TestimonialController extends Controller
             'role.required' => 'Role of testifier is required',
         ]);
 
-        $entry_no = count(Testimonial::all());
-        $order = $entry_no + 1;
+        
+        $max_no = Testimonial::max('order');
+        $order = $max_no + 1;
         
         $image = $request->file('image');
 

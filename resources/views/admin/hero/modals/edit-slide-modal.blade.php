@@ -31,8 +31,7 @@
                 <div class="row">
 
                   <div class="col s12 input-field">
-                    <input id="heading" name="heading" value="{{ $slide->heading }}" type="text" class="validate" 
-                      data-error=".errorTxt3" />
+                    <input id="heading" name="heading" value="{{ $slide->heading }}" type="text" class="validate" data-error=".errorTxt3" />
                     <label for="heading">Heading</label>
                     @error('heading')
                     <small class="errorTxt3 red-text">{{ $message }}*</small>
@@ -47,13 +46,7 @@
                     <small class="errorTxt3  red-text">{{ $message }}*</small>
                     @enderror
                   </div>   
-              
-              <!-- <div class="col s12 display-flex justify-content-end mt-3">
-                <button type="submit" class="btn-large" onclick="ShowPreloader()">
-                  Save Entry</button>
-                <a href="{{ route('view.slides') }}" class="btn-large btn-flat modal-close">Cancel</a>
-              </div>   -->  
-
+                    
               <div class="col s12 mt-7">   
                 <button  id="updateSlideBtn{{ $slide->id }}" type="submit" class="modal-action waves-effect waves-green btn-large">Update</button>
                 <a href="javascript:void(0)" class="btn-large btn-flat modal-close">Cancel</a>

@@ -7,25 +7,28 @@
 @endif
 @php
 $route = Route::current()->getName()
-@endphp 
+@endphp
 
 <html class="loading" lang="en" data-textdirection="ltr">
   <!-- BEGIN: Head-->
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Recordia is a portfolio project for Holberton School which is meant for financial secretaries who want to give almost instant financial reports to the organization they work with and give instant invoice to the donors.">
-    <meta name="keywords" content="balance, payments, expenses, accountind dashboard, analytic dashboard">
-    <meta name="author" content="Pacmedia Creatives">
+      <meta name="title"
+            content="Pacmedia Creatives - Tactical Digital Solutions | Brand Strategy & Performance Engineering" />
+      <meta name="description"
+            content="Pacmedia Creatives deploys tactical digital solutions for ambitious companies worldwide. Expert brand identity systems, high-performance web development, and intelligent AI automation." />
+      <meta name="keywords"
+            content="Pacmedia Creatives, tactical digital solutions, brand strategy, brand identity design, performance web development, AI automation systems, custom web development, conversion-focused design, intelligent automation, digital presence strategy, UI/UX design, React development, brand architecture, global digital agency" />
+      <meta name="author" content="Pacmedia Creatives" />
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <link rel="canonical" href="https://thepacmedia.com/" />
     <title>Web Editor</title>
     <link rel="apple-touch-icon" href="{{ asset('backend/assets/images/favicon/recordia-apple-touch-icon-152x152.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/images/favicon/favicon_r-32x32.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/images/favicon/favicon.png') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/vendors.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/animate-css/animate.css') }}">
-   
+
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/data-tables/css/jquery.dataTables.min.css') }}">
     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/hover-effects/media-hover-effects.css') }}"> -->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css') }}">
@@ -64,11 +67,11 @@ $route = Route::current()->getName()
     @include('admin.body.sidebar')
 
     <!-- BEGIN: Page Main-->
-    
-    @yield('admin')   
+
+    @yield('admin')
 
 
-    
+
     <!-- BEGIN: Footer-->
 
    @include('admin.body.footer')
@@ -97,16 +100,16 @@ $route = Route::current()->getName()
     <script src="{{ asset('backend/assets/js/scripts/app-invoice.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/page-account-settings.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/advance-ui-modals.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/scripts/ui-alerts.js') }}"></script>
+{{--    <script src="{{ asset('backend/assets/js/scripts/ui-alerts.js') }}"></script>--}}
     <script src="{{ asset('backend/assets/js/scripts/advance-ui-media.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/cards-extended.js') }}"></script>
     <!-- END PAGE LEVEL JS-->
-    
+
 <script>
 
 
 
-    
+
  @if(Session::has('message'))
 
   setTimeout(function () {
@@ -114,8 +117,8 @@ $route = Route::current()->getName()
     M.toast({html: toastHTML})
   }, 2000);
 
- @endif 
- 
+ @endif
+
 </script>
   </body>
 </html>

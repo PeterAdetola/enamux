@@ -11,7 +11,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class ServicesController extends Controller
 {
-    
+
 
     public function ViewServices()
     {
@@ -19,7 +19,6 @@ class ServicesController extends Controller
         $services = Service::all()->sortBy('order');
 
         return view('admin.service.view_services', compact('services'));
-        // return view('admin.service.view_services');
 
     } //End Method
 
@@ -50,9 +49,10 @@ class ServicesController extends Controller
             ]);
 
 
-            $service_no = count(Service::all());
-            $order = $service_no + 1;
-            
+
+        $max_no = Service::max('order');
+        $order = $max_no + 1;
+
             $details       = isset($request->details);
             $images = $request->file('images');
             $image = $request->file('image');
@@ -63,7 +63,7 @@ class ServicesController extends Controller
                     $manager = new ImageManager(new Driver());
                     $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
                     $img = $manager->read($image);
-                    $sizedImg = $img->resize(200, 140);
+                    $sizedImg = $img->resize(142, 140);
                     // $sizedImg->toJpeg(80)->save('upload/hero_images/'.$name_gen);
                     $sizedImg->save('uploads/services/icons/'.$name_gen);
                     $save_url = 'uploads/services/icons/'.$name_gen;
@@ -87,7 +87,7 @@ class ServicesController extends Controller
                             $img->save('uploads/services/details/'.$name_gen);
                             $save_urls = 'uploads/services/details/'.$name_gen;
                         }
-                    
+
                         ServiceImgs::insert([
                             'service_id' => $service->id,
                             'order' => $order,
@@ -100,10 +100,10 @@ class ServicesController extends Controller
                         'message' => 'Service saved',
                     );
 
-                return redirect()->route('view.services')->with($notification); 
+                return redirect()->route('view.services')->with($notification);
 
-            } elseif($images && !$details) {       
-            
+            } elseif($images && !$details) {
+
                     if($image) {
                         $manager = new ImageManager(new Driver());
                         $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
@@ -130,7 +130,7 @@ class ServicesController extends Controller
                             $img->save('uploads/services/details/'.$name_gen);
                             $save_urls = 'uploads/services/details/'.$name_gen;
                         }
-                    
+
                          ServiceImgs::insert([
                             'service_id' => $service->id,
                             'order' => $order,
@@ -147,7 +147,7 @@ class ServicesController extends Controller
                     return redirect()->route('view.services')->with($notification);
 
             } elseif(!$images && $details) {
-            
+
                     if($image) {
                     $manager = new ImageManager(new Driver());
                     $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
@@ -173,7 +173,7 @@ class ServicesController extends Controller
                 return redirect()->route('view.services')->with($notification);
 
             } else {
-            
+
                     if($image) {
                     $manager = new ImageManager(new Driver());
                     $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
@@ -195,7 +195,7 @@ class ServicesController extends Controller
                         // 'message' => 'No image, no details',
                         );
 
-                    return redirect()->route('view.services')->with($notification);            
+                    return redirect()->route('view.services')->with($notification);
             }
 
     }  //End Method
@@ -267,7 +267,7 @@ class ServicesController extends Controller
 
         if($image && $images) {
 
-        $toDelete = Service::findOrFail($id);        
+        $toDelete = Service::findOrFail($id);
         $delImg = $toDelete->image;
 
         try {
@@ -275,13 +275,13 @@ class ServicesController extends Controller
             unlink($delImg);
             }
         } catch (Exception $e) {
-        Log::error("Error deleting old image: " . $e->getMessage());            
+        Log::error("Error deleting old image: " . $e->getMessage());
         }
 
             $manager = new ImageManager(new Driver());
             $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
             $img = $manager->read($image);
-            $sizedImg = $img->resize(200, 140);
+            $sizedImg = $img->resize(142, 140);
             // $sizedImg->toJpeg(80)->save('upload/hero_images/'.$name_gen);
             $sizedImg->save('uploads/services/icons/'.$name_gen);
             $save_url = 'uploads/services/icons/'.$name_gen;
@@ -295,7 +295,7 @@ class ServicesController extends Controller
                         $img->save('uploads/services/details/'.$name_gen);
                         $save_urls = 'uploads/services/details/'.$name_gen;
                     }
-                
+
                     ServiceImgs::insert([
                         'service_id' => $id,
                         'order' => $order,
@@ -319,7 +319,7 @@ class ServicesController extends Controller
 
         } elseif($image && !$images) {
 
-        $toDelete = Service::findOrFail($id);        
+        $toDelete = Service::findOrFail($id);
         $delImg = $toDelete->image;
 
         try {
@@ -327,13 +327,13 @@ class ServicesController extends Controller
             unlink($delImg);
             }
         } catch (Exception $e) {
-        Log::error("Error deleting old image: " . $e->getMessage());            
+        Log::error("Error deleting old image: " . $e->getMessage());
         }
 
             $manager = new ImageManager(new Driver());
             $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
             $img = $manager->read($image);
-            $sizedImg = $img->resize(200, 140);
+            $sizedImg = $img->resize(142, 140);
             // $sizedImg->toJpeg(80)->save('upload/hero_images/'.$name_gen);
             $sizedImg->save('uploads/services/icons/'.$name_gen);
             $save_url = 'uploads/services/icons/'.$name_gen;
@@ -350,7 +350,7 @@ class ServicesController extends Controller
             );
 
         return redirect()->back()->with($notification);
-        
+
         } elseif(!$image && $images) {
 
             Service::findOrFail($id)->update([
@@ -370,7 +370,7 @@ class ServicesController extends Controller
                         $save_urls = 'uploads/services/details/'.$name_gen;
                     }
 // echo $id;
-                
+
                     ServiceImgs::insert([
                         'service_id' => $id,
                         'order' => $order,
@@ -416,8 +416,8 @@ class ServicesController extends Controller
           }
 
         ServiceImgs::where('service_id', $id)->delete();
-        
-        $service = Service::findOrFail($id);     
+
+        $service = Service::findOrFail($id);
         $delImg = $service->image;
 
         try {
@@ -425,7 +425,7 @@ class ServicesController extends Controller
             unlink($delImg);
         }
         } catch (Exception $e) {
-        Log::error("Error deleting old image: " . $e->getMessage());            
+        Log::error("Error deleting old image: " . $e->getMessage());
         }
 
         Service::findOrFail($id)->delete();
@@ -474,7 +474,7 @@ class ServicesController extends Controller
         $image = $request->file('image');
 
         if($image) {
-        $service_imgs = ServiceImgs::findOrFail($id);        
+        $service_imgs = ServiceImgs::findOrFail($id);
         $delImg = $service_imgs->image;
 
         try {
@@ -488,7 +488,7 @@ class ServicesController extends Controller
             $manager = new ImageManager(new Driver());
             $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
             $img = $manager->read($image);
-            // $sizedImg = $img->resize(200, 140);
+            // $sizedImg = $img->resize(142, 140);
             // $sizedImg->toJpeg(80)->save('upload/hero_images/'.$name_gen);
             $img->save('uploads/services/details/'.$name_gen);
             $save_url = 'uploads/services/details/'.$name_gen;
@@ -510,7 +510,7 @@ class ServicesController extends Controller
             'message' => 'No image submitted',
         );
 
-        return redirect()->back()->with($notification); 
+        return redirect()->back()->with($notification);
 
         }
     }  //End Method
@@ -520,8 +520,8 @@ class ServicesController extends Controller
      */
     public function DeleteServiceImg($id)
     {
-        
-        $image = ServiceImgs::findOrFail($id);        
+
+        $image = ServiceImgs::findOrFail($id);
         $delImg = $image->image;
 
         try {
@@ -529,7 +529,7 @@ class ServicesController extends Controller
             unlink($delImg);
             }
         } catch (Exception $e) {
-        Log::error("Error deleting old image: " . $e->getMessage());            
+        Log::error("Error deleting old image: " . $e->getMessage());
         }
 
         ServiceImgs::findOrFail($id)->delete();
@@ -556,14 +556,14 @@ class ServicesController extends Controller
 
         $order = 0;
         $id = $request->service_id;
-        
+
         $image = $request->file('image');
 
         if($image) {
             $manager = new ImageManager(new Driver());
             $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
             $img = $manager->read($image);
-            // $sizedImg = $img->resize(200, 140);
+            // $sizedImg = $img->resize(142, 140);
             // $sizedImg->toJpeg(80)->save('upload/hero_images/'.$name_gen);
             $img->save('uploads/services/details/'.$name_gen);
             $save_url = 'uploads/services/details/'.$name_gen;

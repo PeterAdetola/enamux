@@ -19,10 +19,10 @@
 
             <div class="row">
               <div class="col s12 m12 l6 mb-2">
-                  <input name="image" type="file" id="input-file-now-custom-2" class="dropify" data-height='250' required />  
+                  <input name="image" type="file" id="input-file-now-custom-2" class="dropify" data-height='250' required />
               @error('image')
               <small class="errorTxt3  red-text">{{ $message }}*</small>
-              @enderror   
+              @enderror 
               </div>
 
 

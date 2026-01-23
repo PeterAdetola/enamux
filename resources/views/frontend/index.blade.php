@@ -2,8 +2,9 @@
 @section('main')
 
 @php
-$about = App\Models\AboutSummary::all();
-$services = App\Models\Service::orderBy('order')->limit(3)->get();
+$abouts = App\Models\AboutSummary::all();
+//$services = App\Models\Service::orderBy('order')->limit(3)->get();
+$services = App\Models\Service::orderBy('order')->get();
 $projects = App\Models\Project::orderBy('created_at')->get();
 @endphp
 
@@ -16,16 +17,16 @@ $projects = App\Models\Project::orderBy('created_at')->get();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
-                            <h2 class="section-title">About <span>Us</span></h2>
+                            <h2 class="section-title">About <span>us</span></h2>
 
-            @foreach($about as $about)
+            @foreach($abouts as $about)
                             <p>{!! $about->summary !!}</p>
             @endforeach
                         </div>
                         <div class="col-md-6 animate-box" data-animate-effect="fadeInUp">
                             <div class="about-img">
-                                <div class="img"> <img src="{{ url($about->image) }}" class="img-fluid" alt=""> </div>
-                                <div class="about-img-2 about-buro">{{ $about->caption }}</div>
+                                <div class="img"> <img src="{{ url($abouts->first()->image) }}" class="img-fluid" alt=""> </div>
+                                <div class="about-img-2 about-buro">{{ $abouts->first()->caption }}</div>
                             </div>
                         </div>
                     </div>
@@ -46,7 +47,7 @@ $projects = App\Models\Project::orderBy('created_at')->get();
             $i = 1
             @endphp
             @foreach($services as $service)
-                        <div class="col-md-4">                            
+                        <div class="col-md-4">
                             <div class="item">
                             @if($service->details)
                                 <a href="{{ route('service_detailed.page', $service->id) }}"> <img src="{{ url($service->image) }}" alt="">
@@ -102,6 +103,59 @@ $projects = App\Models\Project::orderBy('created_at')->get();
                 </div>
             </section>
             @endif
+
+<!-- Process -->
+<section class="process section-padding2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 animate-box" data-animate-effect="fadeInUp">
+                <h2 class="section-title">Work <span>Process</span></h2>
+            </div>
+        </div>
+        <div class="row text-center mt-60 mb-60">
+            <div class="col-md-3">
+                <div class="item first"> <img src="img/arrow.png" class="tobotm" alt=""> <span class="icon ti-thought"></span>
+                    <div class="cont">
+                        <h6>Client Consultation</h6>
+                        <div class="line"></div>
+                        <p>We conduct comprehensive project assessment, understand client requirements, evaluate site conditions, and establish project scope, budget, and timeline expectations.</p>
+                        <h3>01</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="item odd mb-md50"> <img src="img/arrow.png" alt=""> <span class="icon ti-direction-alt"></span>
+                    <div class="cont">
+                        <h3>02</h3>
+                        <h6>Feasibility Study</h6>
+                        <div class="line"></div>
+                        <p>Our engineers perform technical analysis, geotechnical investigations, cost-benefit studies, and preliminary design to determine project viability and optimal solutions.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="item"> <img src="img/arrow.png" class="tobotm" alt=""> <span class="icon ti-ruler-pencil"></span>
+                    <div class="cont">
+                        <h3>03</h3>
+                        <h6>Detailed Design</h6>
+                        <div class="line"></div>
+                        <p>We develop comprehensive structural calculations, architectural drawings, specifications, and tender documents using advanced software like AutoCAD, STAADPro, and Civil 3D.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="item odd"> <span class="icon ti-tag"></span>
+                    <div class="cont">
+                        <h3>04</h3>
+                        <h6>Construction Supervision</h6>
+                        <div class="line"></div>
+                        <p>Our team provides on-site supervision, quality control testing, progress monitoring, contractor coordination, and project management ensuring timely delivery within budget.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
             <!-- --------------------------------------------- -->
 
             <!-- Footer Here -->
@@ -109,4 +163,3 @@ $projects = App\Models\Project::orderBy('created_at')->get();
     @endsection
 
 
-           

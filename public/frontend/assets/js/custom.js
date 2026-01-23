@@ -3,88 +3,114 @@
 [ Custom settings ]
 
 01. ScrollIt
-02. Burger Menu 
-03. Click outside of offcanvasons
+02. Logo & Menu scroll sticky
+03. Menu Navigation
 04. Sub Menu
-05. Navbar scrolling background 
-06. Close navbar-collapse when a clicked
-07. Sections background image from data background
-08. Isotope Active
-09. Animations
-10. YouTubePopUp
-11. Testimonials owlCarousel
-12. Projects owlCarousel
-13. Project Page owlCarousel - NEW
-14. Blog owlCarousel
-15. Team owlCarousel
-16. Clients owlCarousel
-17. Services owlCarousel
-18. MagnificPopup (Image, Youtube, Vimeo and custom popup)
-19. Scroll back to top
-20. Slider
-21. Accordion Box
-22. Preloader
-23. Contact Form
+05. Sections background image from data background 
+06. Isotope active
+07. Animations
+08. YouTubePopUp
+09. Testimonials owlCarousel
+10. Projects owlCarousel
+11. Project Page owlCarousel - NEW
+12. Blog owlCarousel
+13. Team owlCarousel
+14. Clients owlCarousel
+15. Services owlCarousel
+16. Team owlCarousel
+17. MagnificPopup (Image, Youtube, Vimeo and custom popup)
+18. Scroll back to top
+19. Slider
+20. Accordion Box
+21. Preloader
+22. Contact Form
+23. Grid Background
 
 ------------------------------------------------------------------- */
 
 $(function() {
+    
     "use strict";
     
     // Preloader
-    $("#preloader").fadeOut(700);
-    $(".preloader-bg").delay(600).fadeOut(700);
+	$("#preloader").fadeOut(700);
+	$(".preloader-bg").delay(600).fadeOut(700);
     
     var wind = $(window);
     
-    // ScrollIt 
+    // ScrollIt
     $.scrollIt({
-        upKey: 38
-        , downKey: 40
-        , easing: 'swing'
-        , scrollTime: 600
-        , activeClass: 'active'
-        , onPageChange: null
-        , topOffset: -70
+      upKey: 38,                // key code to navigate to the next section
+      downKey: 40,              // key code to navigate to the previous section
+      easing: 'swing',          // the easing function for animation
+      scrollTime: 600,          // how long (in ms) the animation takes
+      activeClass: 'active',    // class given to the active nav element
+      onPageChange: null,       // function(pageIndex) that is called when page is changed
+      topOffset: -70            // offste (in px) for fixed top navigation
     });
     
-    // Burger Menu 
-    var burgerMenu = function () {
-        $('.js-bauen-nav-toggle').on('click', function (event) {
-            event.preventDefault();
-            var $this = $(this);
-            if ($('body').hasClass('offcanvason')) {
-                $this.removeClass('active');
-                $('body').removeClass('offcanvason');
+    // Logo & Menu scroll sticky
+    $(window).scroll(function () {
+        var $this = $(this)
+            , st = $this.scrollTop()
+            , navbar = $('.bauen-header');
+        if (st > 150) {
+            if (!navbar.hasClass('scrolled')) {
+                navbar.addClass('scrolled');
             }
-            else {
-                $this.addClass('active');
-                $('body').addClass('offcanvason');
+        }
+        if (st < 150) {
+            if (navbar.hasClass('scrolled')) {
+                navbar.removeClass('scrolled sleep');
             }
-        });
-    };
+        }
+        if (st > 350) {
+            if (!navbar.hasClass('awake')) {
+                navbar.addClass('awake');
+            }
+        }
+        if (st < 350) {
+            if (navbar.hasClass('awake')) {
+                navbar.removeClass('awake');
+                navbar.addClass('sleep');
+            }
+        }
+    });
     
-    // Click outside of offcanvasons
-    var mobileMenuOutsideClick = function () {
-        $(document).click(function (e) {
-            var container = $("#bauen-aside, .js-bauen-nav-toggle");
-            if (!container.is(e.target) && container.has(e.target).length === 0) {
-                if ($('body').hasClass('offcanvason')) {
-                    $('body').removeClass('offcanvason');
-                    $('.js-bauen-nav-toggle').removeClass('active');
-                }
-            }
-        });
-        $(window).scroll(function () {
-            if ($('body').hasClass('offcanvason')) {
-                $('body').removeClass('offcanvason');
-                $('.js-bauen-nav-toggle').removeClass('active');
-            }
-        });
-    };
-    
+    // Menu Navigation    
+    $('.bauen-js-bauen-nav-toggle').on('click', function (e) {
+        var $this = $(this);
+        e.preventDefault();
+        if ($('body').hasClass('menu-open')) {
+            $this.removeClass('active');
+            $('.bauen-wrap .bauen-wrap-inner > ul > li').each(function (i) {
+                var that = $(this);
+                setTimeout(function () {
+                    that.removeClass('open');
+                }, i * 100);
+            });
+            setTimeout(function () {
+                $('.bauen-wrap').removeClass('bauen-wrap-show');
+            }, 300);
+            $('body').removeClass('menu-open');
+        }
+        else {
+            $('.bauen-wrap').addClass('bauen-wrap-show');
+            $this.addClass('active');
+            $('body').addClass('menu-open');
+            setTimeout(function () {
+                $('.bauen-wrap .bauen-wrap-inner > ul > li').each(function (i) {
+                    var that = $(this);
+                    setTimeout(function () {
+                        that.addClass('open');
+                    }, i * 100);
+                });
+            }, 200);
+        }
+    });
+     
     // Sub Menu 
-    $('.bauen-main-menu li.bauen-sub>a').on('click', function () {
+    $('.bauen-menu li.bauen-menu-sub>a').on('click', function () {
         $(this).removeAttr('href');
         var element = $(this).parent('li');
         if (element.hasClass('open')) {
@@ -101,35 +127,9 @@ $(function() {
             element.siblings('li').find('ul').slideUp();
         }
     });
-    $('.bauen-main-menu>ul>li.bauen-sub>a').append('<span class="holder"></span>');
+    $('.bauen-menu>ul>li.bauen-menu-sub>a').append('<span class="holder"></span>');
     
-    // Document on load.
-    $(function () {
-        burgerMenu();
-        mobileMenuOutsideClick();
-    });
-    
-    
-    // Navbar scrolling background 
-    wind.on("scroll", function () {
-        var bodyScroll = wind.scrollTop()
-            , navbar = $(".navbar")
-            , logo = $(".navbar:not(.nav-box) .logo> img");
-        if (bodyScroll > 100) {
-            navbar.addClass("nav-scroll");
-            logo.attr('src', 'img/logo.png');
-        }
-        else {
-            navbar.removeClass("nav-scroll");
-            logo.attr('src', 'img/logo.png');
-        }
-    });
-    
-    // Close navbar-collapse when a clicked
-    $(".navbar-nav a").on('click', function () {
-        $(".navbar-collapse").removeClass("show");
-    });
-    
+   
     // Sections background image from data background
     var pageSection = $(".bg-img, section");
     pageSection.each(function(indx){
@@ -139,50 +139,50 @@ $(function() {
     });
     
     // Isotope Active
-    $('.bauen-project-items').imagesLoaded(function () {
-        // Add isotope on click filter function
-        $('.bauen-project-filter li').on('click', function () {
-            $(".bauen-project-filter li").removeClass("active");
-            $(this).addClass("active");
-            var selector = $(this).attr('data-filter');
-            $(".bauen-project-items").isotope({
-                filter: selector
-                , animationOptions: {
-                    duration: 750
-                    , easing: 'linear'
-                    , queue: false
-                , }
-            });
-            return false;
-        });
-        $(".bauen-project-items").isotope({
-            itemSelector: '.single-item'
-            , layoutMode: 'masonry'
-        , });
-    });
+	$('.bauen-project-items').imagesLoaded(function () {
+		// Add isotope on click filter function
+		$('.bauen-project-filter li').on('click', function () {
+			$(".bauen-project-filter li").removeClass("active");
+			$(this).addClass("active");
+			var selector = $(this).attr('data-filter');
+			$(".bauen-project-items").isotope({
+				filter: selector
+				, animationOptions: {
+					duration: 750
+					, easing: 'linear'
+					, queue: false
+				, }
+			});
+			return false;
+		});
+		$(".bauen-project-items").isotope({
+			itemSelector: '.single-item'
+			, layoutMode: 'masonry'
+		, });
+	});
     
     // Isotope Active Masonry Gallery
-    $('.bauen-gallery-items').imagesLoaded(function () {
-        // Add isotope on click filter function
-        $('.bauen-gallery-filter li').on('click', function () {
-            $(".bauen-gallery-filter li").removeClass("active");
-            $(this).addClass("active");
-            var selector = $(this).attr('data-filter');
-            $(".bauen-gallery-items").isotope({
-                filter: selector
-                , animationOptions: {
-                    duration: 750
-                    , easing: 'linear'
-                    , queue: false
-                , }
-            });
-            return false;
-        });
-        $(".bauen-gallery-items").isotope({
-            itemSelector: '.single-item'
-            , layoutMode: 'masonry'
-        , });
-    });
+	$('.bauen-gallery-items').imagesLoaded(function () {
+		// Add isotope on click filter function
+		$('.bauen-gallery-filter li').on('click', function () {
+			$(".bauen-gallery-filter li").removeClass("active");
+			$(this).addClass("active");
+			var selector = $(this).attr('data-filter');
+			$(".bauen-gallery-items").isotope({
+				filter: selector
+				, animationOptions: {
+					duration: 750
+					, easing: 'linear'
+					, queue: false
+				, }
+			});
+			return false;
+		});
+		$(".bauen-gallery-items").isotope({
+			itemSelector: '.single-item'
+			, layoutMode: 'masonry'
+		, });
+	});
 
     // Animations
     var contentWayPoint = function () {
@@ -221,7 +221,7 @@ $(function() {
         contentWayPoint();
     });
     
-    //  YouTubePopUp
+    // YouTubePopUp
     $("a.vid").YouTubePopUp();
     
     // Testimonials owlCarousel
@@ -255,7 +255,6 @@ $(function() {
         , autoplay: false
         , dots: true
         , autoplayHoverPause:true
-        , smartSpeed: 1500
         , responsiveClass: true
         , responsive: {
             0: {
@@ -270,7 +269,7 @@ $(function() {
         }
     });
     
-    // Project Page owlCarousel
+     // Project Page owlCarousel
     $('.project-page .owl-carousel').owlCarousel({
         loop: true
         , margin: 30
@@ -324,7 +323,8 @@ $(function() {
         , responsiveClass: true
         , responsive: {
             0: {
-                items: 1
+                items: 1,
+                dots: true
             }
             , 600: {
                 items: 2
@@ -410,39 +410,6 @@ $(function() {
     
 });
 
-
-// Smooth Scrolling
-    $('a[href*="#"]')
-    // Remove links that don't actually link to anything
-    .not('[href="#"]').not('[href="#0"]').click(function (event) {
-            // On-page links
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-                // Figure out element to scroll to
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                // Does a scroll target exist?
-                if (target.length) {
-                    // Only prevent default if animation is actually gonna happen
-                    event.preventDefault();
-                    $('html, body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000, function () {
-                        // Callback after animation
-                        // Must change focus!
-                        var $target = $(target);
-                        $target.focus();
-                        if ($target.is(":focus")) { // Checking if the target was focused
-                            return false;
-                        }
-                        else {
-                            $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
-                            $target.focus(); // Set focus again
-                        };
-                    });
-                }
-            }
-        });
-
 // Slider 
 $(document).ready(function() {
     var owl = $('.header .owl-carousel');
@@ -453,7 +420,7 @@ $(document).ready(function() {
         dots: false,
         margin: 0,
         autoplay: true,
-        autoplayTimeout: 5000,
+        smartSpeed: 500,
          nav: true,
          navText: ['<i class="ti-angle-left" aria-hidden="true"></i>', '<i class="ti-angle-right" aria-hidden="true"></i>']
     });
@@ -464,7 +431,7 @@ $(document).ready(function() {
         dots: false,
         margin: 0,
         autoplay: true,
-        autoplayTimeout: 5000,
+        smartSpeed: 500,
         animateOut: 'fadeOut',
         nav: true,
         navText: ['<i class="ti-angle-left" aria-hidden="true"></i>', '<i class="ti-angle-right" aria-hidden="true"></i>']
@@ -483,7 +450,7 @@ $(document).ready(function() {
 });
 
 // Accordion Box
-  if ($(".accordion-box").length) {
+if ($(".accordion-box").length) {
     $(".accordion-box").on("click", ".acc-btn", function () {
       var outerBox = $(this).parents(".accordion-box");
       var target = $(this).parents(".accordion");
@@ -506,35 +473,82 @@ $(document).ready(function() {
 
 
 // Contact Form
-    // var form = $('.contact__form'),
-    //     message = $('.contact__msg'),
-    //     form_data;
-    // // success function
-    // function done_func(response) {
-    //     message.fadeIn().removeClass('alert-danger').addClass('alert-success');
-    //     message.text(response);
-    //     setTimeout(function () {
-    //         message.fadeOut();
-    //     }, 2000);
-    //     form.find('input:not([type="submit"]), textarea').val('');
-    // }
-    // // fail function
-    // function fail_func(data) {
-    //     message.fadeIn().removeClass('alert-success').addClass('alert-danger');
-    //     message.text(data.responseText);
-    //     setTimeout(function () {
-    //         message.fadeOut();
-    //     }, 2000);
-    // }
-    // form.submit(function (e) {
-    //     e.preventDefault();
-    //     form_data = $(this).serialize();
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: form.attr('action'),
-    //         data: form_data
-    //     })
-    //     .done(done_func)
-    //     .fail(fail_func);
-    // });
-    // 
+    var form = $('.contact__form'),
+        message = $('.contact__msg'),
+        form_data;
+    // success function
+    function done_func(response) {
+        message.fadeIn().removeClass('alert-danger').addClass('alert-success');
+        message.text(response);
+        setTimeout(function () {
+            message.fadeOut();
+        }, 2000);
+        form.find('input:not([type="submit"]), textarea').val('');
+    }
+    // fail function
+    function fail_func(data) {
+        message.fadeIn().removeClass('alert-success').addClass('alert-success');
+        message.text(data.responseText);
+        setTimeout(function () {
+            message.fadeOut();
+        }, 2000);
+    }
+    form.submit(function (e) {
+        e.preventDefault();
+        form_data = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: form_data
+        })
+        .done(done_func)
+        .fail(fail_func);
+    });
+    
+// Slider Grid Background
+  (function () {
+    var imageElements = document.querySelectorAll('.grid-img');
+    var itemElements = document.querySelectorAll('.grid-con');
+    if (itemElements.length) {
+      itemElements.forEach(function (item, index) {
+        item.addEventListener('mouseenter', function () {
+          imageElements.forEach(function (image) {
+            image.classList.remove('grid-img-active');
+          });
+          itemElements.forEach(function (card) {
+            card.classList.remove('grid-con-active');
+          });
+          item.classList.add('grid-con-active');
+          imageElements[index].classList.add('grid-img-active');
+        });
+      });
+    }
+  })();
+
+// Slider Grid Background owlCarousel *
+$('.slider-grid-bg .owl-carousel').owlCarousel({
+        loop: true,
+        margin: 30,
+        mouseDrag: true,
+        autoplay: false,
+        dots: true,
+        nav: false,
+        navText: ["<span class='lnr ti-angle-left'></span>","<span class='lnr ti-angle-right'></span>"],
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1,
+                dots: true,
+                nav: false
+            },
+            600: {
+                items: 2,
+                dots: true,
+                nav: false
+            },
+            1000: {
+                items: 3
+            }
+        }
+    });
+    

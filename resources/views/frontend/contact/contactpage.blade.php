@@ -20,7 +20,7 @@ if (Session::has('message') ) {
                     </div>
                     <div class="row mb-90">
                         <div class="col-md-4 mb-30 animate-box" data-animate-effect="fadeInUp">
-                            <p><b>Geosunny & Partners Limited</b></p>
+                            <p><b>Enamux Limited</b></p>
                             <p>For strong and the state of the art structures in your residence, environment and even interior, we got you always</p>
                             <!-- <p>@php echo $msg @endphp</p> -->
                         </div>
@@ -41,8 +41,8 @@ if (Session::has('message') ) {
             @php
                 $email = $contact->email;
                 $emails = preg_split("#(?<=$separators)#", $email);
-                $i = 1; 
-            @endphp 
+                $i = 1;
+            @endphp
                             <p>
                         @foreach($emails as $email)
                             <b>Email {{$i++}}:</b>&nbsp;&nbsp;<a href="mailto:{{ strip_tags($email) }}">{{ strip_tags($email) }}</a><br>
@@ -56,7 +56,7 @@ if (Session::has('message') ) {
     @endif
                         <div class="col-md-4 animate-box" data-animate-effect="fadeInUp">
                             <p><b>Contact Form</b></p>
-                            
+
                             <form method="post" class="contact__form" action="{{ route('send.enquiry') }}">
                             @csrf
                             <!-- Form message -->
@@ -70,16 +70,16 @@ if (Session::has('message') ) {
                             <!-- Form elements -->
                             <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <input name="name" type="text" placeholder="Your Name *" required> 
+                                    <input name="name" type="text" placeholder="Your Name *" required>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <input name="email" type="email" placeholder="Your Email *" required> 
+                                    <input name="email" type="email" placeholder="Your Email *" required>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <input name="phone" type="text" placeholder="Your Number *" required> 
+                                    <input name="phone" type="text" placeholder="Your Number *" required>
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <input name="subject" type="text" placeholder="Subject *" required> 
+                                    <input name="subject" type="text" placeholder="Subject *" required>
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <textarea name="message" id="message" cols="30" rows="4" placeholder="Message *" required></textarea>

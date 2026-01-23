@@ -230,7 +230,7 @@ class ProjectController extends Controller
 
         $projectImages = $project->images->sortBy('order');
 
-        return view('admin.project.edit_project', compact('project'), compact('projectImages'));
+        return view('admin.project.edit_project', compact('project', 'projectImages'));
 
     } // End Method |-------------------
 
@@ -244,7 +244,7 @@ class ProjectController extends Controller
 
         $projectImages = $project->images->sortBy('order');
 
-        return view('admin.project.edit_project_imgs', compact('project'), compact('projectImages'));
+        return view('admin.project.edit_project_imgs', compact('project', 'projectImages'));
 
     } // End Method |-------------------
 

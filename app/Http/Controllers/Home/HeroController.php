@@ -41,7 +41,9 @@ class HeroController extends Controller
             'image.required' => 'Hero image in JPG/PNG is required',
         ]);
 
-        $order = 0;
+        
+        $max_no = HeroSection::max('order');
+        $order = $max_no + 1;
         $image = $request->file('image');
 
         if($image) {

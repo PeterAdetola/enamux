@@ -34,8 +34,8 @@ class ClientController extends Controller
             'image.required' => 'Logo/Icon in PNG is required',
         ]);
 
-        $entry_no = count(Client::all());
-        $order = $entry_no + 1;
+        $max_no = Client::max('order');
+        $order = $max_no + 1;
         
         $image = $request->file('image');
 
