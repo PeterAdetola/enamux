@@ -1,9 +1,8 @@
 @extends('frontend.main_master')
 @section('main')
-
+    <!-- Test deployment -->
 @php
 $abouts = App\Models\AboutSummary::all();
-//$services = App\Models\Service::orderBy('order')->limit(3)->get();
 $services = App\Models\Service::orderBy('order')->get();
 $projects = getProjects();
 @endphp
