@@ -9,7 +9,8 @@ use App\Http\Controllers\Home\ClientController;
 use App\Http\Controllers\About\AboutController;
 use App\Http\Controllers\Service\ServicesController;
 use App\Http\Controllers\Team\TeamController;
-use App\Http\Controllers\Project\ProjectController;
+//use App\Http\Controllers\Project\ProjectController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\Contact\ContactController;
 use App\Http\Controllers\Contact\SocialMediaController;
 use App\Http\Controllers\Contact\EnquiryController;
@@ -29,6 +30,10 @@ Route::get('/', function () {
     return view('frontend.index');
 })->name('home');
 
+Route::get('/brand-guidelines', function () {
+    return view('frontend.brand-guidelines');
+})->name('brand-guidelines');
+
 
 Route::get('/dashboard', function () {
     return view('admin.index');
@@ -41,7 +46,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // --------------| Hero Routes |----------------------------------------
-Route::controller(HeroController::class)->group(function () 
+Route::controller(HeroController::class)->group(function ()
 {
     // Route::get('/', 'Intropage')->name('intro');
 
@@ -50,11 +55,11 @@ Route::controller(HeroController::class)->group(function ()
     Route::get('/view/slides', 'ViewSlides')->name('view.slides');
     Route::post('/sort/slide', 'SortSlide')->name('sort.slide');
     Route::post('/update/slider', 'UpdateSlide')->name('update.slide');
-    Route::post('/store/slide', 'SaveSlide')->name('save.slide');    
+    Route::post('/store/slide', 'SaveSlide')->name('save.slide');
 });
 
 // --------------| About Routes |----------------------------------------
-Route::controller(AboutController::class)->group(function () 
+Route::controller(AboutController::class)->group(function ()
 {
     Route::post('/update/about_summary', 'UpdateAboutSummary')->name('update.about_summary');
 // --------------| About non-admin Routes |----------------------------------------
@@ -62,7 +67,7 @@ Route::controller(AboutController::class)->group(function ()
 });
 
 // --------------| Services Routes |----------------------------------------
-Route::controller(ServicesController::class)->group(function () 
+Route::controller(ServicesController::class)->group(function ()
 {
     Route::get('/view/services', 'ViewServices')->name('view.services');
     Route::get('/create/service', 'CreateService')->name('create.service');
@@ -82,7 +87,7 @@ Route::controller(ServicesController::class)->group(function ()
 });
 
 // --------------| Team Routes |----------------------------------------
-Route::controller(TeamController::class)->group(function () 
+Route::controller(TeamController::class)->group(function ()
 {
     Route::get('/view/members', 'ViewMembers')->name('view.members');
     Route::post('/store/member', 'SaveMember')->name('save.member');
@@ -94,7 +99,7 @@ Route::controller(TeamController::class)->group(function ()
 });
 
 // --------------| Project Routes |----------------------------------------
-Route::controller(ProjectController::class)->group(function () 
+Route::controller(ProjectController::class)->group(function ()
 {
     Route::get('/view/projects', 'ViewProjects')->name('view.projects');
     Route::get('/create/project', 'CreateProject')->name('create.project');
@@ -110,8 +115,11 @@ Route::controller(ProjectController::class)->group(function ()
     Route::get('/delete/project_img/{id}', 'DeleteProjectImg')->name('delete.project_img');
 
 // --------------| Project non-admin Routes |----------------------------------------
-    Route::get('/projects', 'ProjectPage')->name('projects.page');
-    Route::get('/project/detailed/{id}', 'ProjectDetailedPage')->name('project_detailed.page');
+//    Route::get('/projects', 'ProjectPage')->name('projects.page');
+//    Route::get('/project/detailed/{id}', 'ProjectDetailedPage')->name('project_detailed.page');
+    // Projects routes
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.page');
+    Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
 });
 
 // --------------| Testimonial Routes |----------------------------------------

@@ -30,7 +30,6 @@ class HeroController extends Controller
      */
     public function SaveSlide(Request $request)
     {
-
         $request->validate([
             'heading' => 'required',
             'sub_heading' => 'required',
@@ -41,7 +40,6 @@ class HeroController extends Controller
             'image.required' => 'Hero image in JPG/PNG is required',
         ]);
 
-        
         $max_no = HeroSection::max('order');
         $order = $max_no + 1;
         $image = $request->file('image');
@@ -49,37 +47,55 @@ class HeroController extends Controller
         if($image) {
             $manager = new ImageManager(new Driver());
             $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-            $img = $manager->read($image);
-            $sizedImg = $img->resize(1920, 1128);
-            // $sizedImg->toJpeg(80)->save('upload/hero_images/'.$name_gen);
-            $sizedImg->save('uploads/hero_images/'.$name_gen);
-            $save_url = 'uploads/hero_images/'.$name_gen;
 
-            $thumbnail = $manager->read($image)->cover(200, 200)
-            ->save('uploads/hero_images/thumbnails/thumbnail_' . $name_gen);
-            $thumbnail = 'uploads/hero_images/thumbnails/thumbnail_'.$name_gen;
+            // Ensure directories exist
+            $mainDir = public_path('uploads/hero_images');
+            $thumbnailDir = public_path('uploads/hero_images/thumbnails');
+
+            if (!file_exists($mainDir)) {
+                mkdir($mainDir, 0775, true);
+            }
+            if (!file_exists($thumbnailDir)) {
+                mkdir($thumbnailDir, 0775, true);
+            }
+
+            // Read from uploaded file content
+            $img = $manager->read($image->get());
+
+            // Save main image
+            $fullPath = public_path('uploads/hero_images/' . $name_gen);
+            $img->resize(1920, 1128)->save($fullPath);
+
+            // Save the relative path from public directory (to match your imports)
+            $save_url = 'uploads/hero_images/' . $name_gen;
+
+            // Create and save thumbnail
+            $thumbnailPath = public_path('uploads/hero_images/thumbnails/thumbnail_' . $name_gen);
+            $manager->read($image->get())->cover(200, 200)->save($thumbnailPath);
+
+            // Save the relative path for thumbnail too
+            $thumbnail = 'uploads/hero_images/thumbnails/thumbnail_' . $name_gen;
         }
 
-            HeroSection::insert([
-                'order' => $order,
-                'heading' => $request->heading,
-                'sub_heading' => $request->sub_heading,
-                'image' => $save_url,
-                'thumbnail' => $thumbnail,
-            ]);
+        HeroSection::insert([
+            'order' => $order,
+            'heading' => $request->heading,
+            'sub_heading' => $request->sub_heading,
+            'image' => $save_url,
+            'thumbnail' => $thumbnail,
+        ]);
 
         $notification = array(
             'message' => 'Hero image saved',
         );
 
         return redirect()->back()->with($notification);
-
-    }  //End Method
+    }
 
     /**
      * Edit slide.
      */
-     public function EditSlide($id)
+    public function EditSlide($id)
     {
 
         $editslide = HeroSection::findOrFail($id);
@@ -93,38 +109,51 @@ class HeroController extends Controller
      */
     public function UpdateSlide(Request $request)
     {
-
         $id = $request->id;
         $image = $request->file('image');
 
         if($image){
-        $slide = HeroSection::findOrFail($id);        
-        $delImg = $slide->image;
-        $delThumb = $slide->thumbnail;
+            $slide = HeroSection::findOrFail($id);
+            $delImg = $slide->image;
+            $delThumb = $slide->thumbnail;
 
-        try {
-            if(file_exists($delImg)){
-            unlink($delImg);
-        }
-            if(file_exists($delThumb)) {
-            unlink($delThumb);                
+            try {
+                if(file_exists(public_path($delImg))){
+                    unlink(public_path($delImg));
+                }
+                if(file_exists(public_path($delThumb))) {
+                    unlink(public_path($delThumb));
+                }
+            } catch (Exception $e) {
+                Log::error("Error deleting old image/thumbnail: " . $e->getMessage());
             }
-        } catch (Exception $e) {
-        Log::error("Error deleting old image/thumbnail: " . $e->getMessage());            
-        }
 
             $manager = new ImageManager(new Driver());
             $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-            $img = $manager->read($image);
-            $sizedImg = $img->resize(1920, 1128);
-            // $sizedImg->toJpeg(80)->save('upload/hero_images/'.$name_gen);
-            $sizedImg->save('uploads/hero_images/'.$name_gen);
-            $save_url = 'uploads/hero_images/'.$name_gen;
 
-            $thumbnail = $manager->read($image)->cover(200, 200)
-            ->save('uploads/hero_images/thumbnails/thumbnail_' . $name_gen);
-            $thumbnail = 'uploads/hero_images/thumbnails/thumbnail_'.$name_gen;
+            // Ensure directories exist
+            $mainDir = public_path('uploads/hero_images');
+            $thumbnailDir = public_path('uploads/hero_images/thumbnails');
 
+            if (!file_exists($mainDir)) {
+                mkdir($mainDir, 0775, true);
+            }
+            if (!file_exists($thumbnailDir)) {
+                mkdir($thumbnailDir, 0775, true);
+            }
+
+            // Read from uploaded file
+            $img = $manager->read($image->get());
+
+            // Save main image
+            $fullPath = public_path('uploads/hero_images/' . $name_gen);
+            $img->resize(1920, 1128)->save($fullPath);
+            $save_url = 'uploads/hero_images/' . $name_gen;
+
+            // Create thumbnail
+            $thumbnailPath = public_path('uploads/hero_images/thumbnails/thumbnail_' . $name_gen);
+            $manager->read($image->get())->cover(200, 200)->save($thumbnailPath);
+            $thumbnail = 'uploads/hero_images/thumbnails/thumbnail_' . $name_gen;
 
             HeroSection::findOrFail($id)->update([
                 'heading' => $request->heading,
@@ -133,42 +162,41 @@ class HeroController extends Controller
                 'thumbnail' => $thumbnail,
             ]);
 
-        $notification = array(
-            'message' => 'Hero image updated',
-        );
+            $notification = array(
+                'message' => 'Hero image updated',
+            );
 
-        return redirect()->back()->with($notification);
+            return redirect()->back()->with($notification);
 
         } else {
-
             HeroSection::findOrFail($id)->update([
                 'heading' => $request->heading,
                 'sub_heading' => $request->sub_heading,
-                ]);
+            ]);
 
-        $notification = array(
-            'message' => 'Hero details updated',
+            $notification = array(
+                'message' => 'Hero details updated',
             );
 
-        return redirect()->back()->with($notification);
+            return redirect()->back()->with($notification);
         }
-    }  //End Method
+    }
 
     /**
      * Sort slide.
      */
-     public function SortSlide(Request $request)
+    public function SortSlide(Request $request)
     {
 
         $slideOrder = $request->input('order');
 
         foreach ($slideOrder as $index => $slideId) {
-        HeroSection::where('id', $slideId)->update(['order' => $index + 1]);
+            HeroSection::where('id', $slideId)->update(['order' => $index + 1]);
         }
 
         $notification = array(
             'message' => 'Slide sorted',
-            );
+        );
 
         return redirect()->back()->with($notification);
 
@@ -179,20 +207,19 @@ class HeroController extends Controller
      */
     public function DeleteSlide($id)
     {
-        
-        $slide = HeroSection::findOrFail($id);        
+        $slide = HeroSection::findOrFail($id);
         $delImg = $slide->image;
         $delThumb = $slide->thumbnail;
 
         try {
-            if(file_exists($delImg)){
-            unlink($delImg);
-        }
-            if(file_exists($delThumb)) {
-            unlink($delThumb);                
+            if(file_exists(public_path($delImg))){
+                unlink(public_path($delImg));
+            }
+            if(file_exists(public_path($delThumb))) {
+                unlink(public_path($delThumb));
             }
         } catch (Exception $e) {
-        Log::error("Error deleting old image/thumbnail: " . $e->getMessage());            
+            Log::error("Error deleting old image/thumbnail: " . $e->getMessage());
         }
 
         HeroSection::findOrFail($id)->delete();
@@ -202,7 +229,6 @@ class HeroController extends Controller
         );
 
         return redirect()->back()->with($notification);
-
     } //End Method
 
 

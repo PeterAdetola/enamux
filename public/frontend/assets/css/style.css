@@ -81,7 +81,7 @@ body {
     line-height: 1.75em;
     color: #999;
     overflow-x: hidden !important;
-    background: #1b2c45;
+    background: #1A2B45;
 }
 p {
     font-family: 'Merriweather', serif;
@@ -452,11 +452,11 @@ blockquote cite:before {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1b2c45;
+    background: #1A2B45;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #1b2c45;
+    background: #1A2B45;
 }
 
 
@@ -529,7 +529,7 @@ blockquote cite:before {
 /* ======= Menu style ======= */
 .bauen-wrap {
     display: block;
-    background: #1b2c45;
+    background: #1A2B45;
     right: 0;
     z-index: 101;
     position: fixed;
@@ -564,7 +564,7 @@ blockquote cite:before {
     position: relative;
     z-index: 1021;
     float: left;
-    background: #1b2c45;
+    background: #1A2B45;
     padding: 30px 45px;
 }
 .bauen-menu {}
@@ -832,7 +832,7 @@ blockquote cite:before {
 .bauen-header.scrolled {
     position: fixed;
     top: 0;
-    background:#1b2c45;
+    background:#1A2B45;
     -webkit-transition: .0s all ease;
     -o-transition: .0s all ease;
     transition: .0s all ease;
@@ -862,7 +862,7 @@ blockquote cite:before {
 }
 .bauen-header.scrolled .bauen-logo-wrap {
     padding: 15px 70px 15px 150px;
-    background: #1b2c45;
+    background: #1A2B45;
 }
 .bauen-header.scrolled .bauen-nav-toggle {
     top: -1px !important;
@@ -1054,7 +1054,7 @@ blockquote cite:before {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #1b2c45;
+    background: #1A2B45;
     position: absolute;
     top: 10px;
     right: 0;
@@ -1147,7 +1147,7 @@ hr {
 
 /* ======= Slider left panel style ======= */
 .left-panel {
-    background: #1b2c45;
+    background: #1A2B45;
     position: absolute;
     width: 150px;
     height: 100%;
@@ -1168,7 +1168,7 @@ hr {
     left: 0;
     width: 100%;
     bottom: 24px;
-    background: #1b2c45;
+    background: #1A2B45;
     z-index: 10;
 }
 
@@ -1441,7 +1441,7 @@ hr {
 .about .about-img .img img {
     position: relative;
     z-index: 2;
-    background: #1b2c45;
+    background: #1A2B45;
 }
 .about-img-2 {
     position: relative
@@ -2527,7 +2527,7 @@ hr {
     left: 0;
     bottom: -11px;
     max-width: 80%;
-    background-color: #1b2c45;
+    background-color: #1A2B45;
     padding-top: 25px;
     padding-right: 40px;
     -webkit-transform: translateY(100%);
@@ -2666,7 +2666,7 @@ hr {
     position: absolute;
     left: 50px;
     bottom: 89px;
-    background-color: #1b2c45;
+    background-color: #1A2B45;
     padding: 20px 20px 20px 0;
     margin-right: 20px;
 }
@@ -2770,7 +2770,7 @@ hr {
     transform: scale(0.95);
 }
 .projects4 .caption {
-    background: #1b2c45;
+    background: #1A2B45;
     position: absolute;
     left: 0;
     top: 50%;
@@ -2783,7 +2783,7 @@ hr {
 .projects4.left .caption {
     left: auto;
     right: 0;
-    background: #1b2c45;
+    background: #1A2B45;
     padding: 5% 0% 5% 4%;
 }
 .projects4 .caption h4 {
@@ -2888,7 +2888,7 @@ hr {
     left: 0;
     bottom: -11px;
     max-width: 80%;
-    background-color: #1b2c45;
+    background-color: #1A2B45;
     padding-top: 20px;
     padding-right: 40px;
     -webkit-transform: translateY(100%);
@@ -3100,11 +3100,11 @@ hr {
     font-size: 14px;
 }
 .gallery-box .gallery-detail i {
-    color: #1b2c45;
+    color: #1A2B45;
     padding: 8px;
 }
 .gallery-box .gallery-detail i:hover {
-    color: #1b2c45;
+    color: #1A2B45;
 }
 .gallery-box:hover .gallery-detail {
     top: 50%;
@@ -3228,7 +3228,7 @@ button.mfp-arrow {
 /* testimonials style */
 .testimonials-box {
     position: relative;
-    background: #1b2c45;
+    background: #1A2B45;
     padding: 60px 45px;
     margin-bottom: -90px;
 }
@@ -3650,7 +3650,7 @@ button.mfp-arrow {
     width: 100%;
     padding: 10px;
     border: 0;
-    background: #1b2c45;
+    background: #1A2B45;
     margin-bottom: 0;
 }
 .blog-sidebar .search form button {
@@ -3677,7 +3677,7 @@ button.mfp-arrow {
 }
 .blog-sidebar ul.tags li:hover,
 .blog-sidebar ul.tags li a:hover {
-    background-color: #1b2c45;
+    background-color: #1A2B45;
     color: #fff;
 }
 
@@ -4024,7 +4024,7 @@ hr.border-2 {
     transition: width 0.3s ease;
 }
 .butn-light a:hover span {
-    color: #1b2c45;
+    color: #1A2B45;
 }
 
 
@@ -4035,7 +4035,7 @@ hr.border-2 {
     position: initial;
 }
 .main-footer.dark {
-    background: #1b2c45;
+    background: #1A2B45;
     color: #fff;
 }
 .main-footer .abot p {
@@ -4154,7 +4154,7 @@ hr.border-2 {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #1b2c45;
+    background: #1A2B45;
     z-index: 999999;
 }
 #preloader {
@@ -4464,7 +4464,7 @@ hr.border-2 {
     bottom: 0;
     left: 100%;
     z-index: 1;
-    background: #1b2c45;
+    background: #1A2B45;
     color: #fff;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
@@ -4908,7 +4908,7 @@ hr.border-2 {
     background: #000;
 }
 [data-overlay-darkgray]:before {
-    background: #1b2c45;
+    background: #1A2B45;
 }
 [data-overlay-light]:before {
     background: #fff;
@@ -5041,7 +5041,7 @@ hr.border-2 {
     }
     .bauen-header.scrolled .bauen-logo-wrap {
         padding: 15px;
-        background: #1b2c45;
+        background: #1A2B45;
     }
     .bauen-header .bauen-logo img {
         margin-bottom: 0px;
@@ -5051,7 +5051,7 @@ hr.border-2 {
         display: none;
     }
     .bauen-header {
-        background-color: #1b2c45;
+        background-color: #1A2B45;
     }
     .bauen-nav-toggle {
         margin-top: 25px;

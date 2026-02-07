@@ -5,7 +5,7 @@
 $abouts = App\Models\AboutSummary::all();
 //$services = App\Models\Service::orderBy('order')->limit(3)->get();
 $services = App\Models\Service::orderBy('order')->get();
-$projects = App\Models\Project::orderBy('created_at')->get();
+$projects = getProjects();
 @endphp
 
         <!-- Add slider here -->
@@ -72,37 +72,68 @@ $projects = App\Models\Project::orderBy('created_at')->get();
             @endif
 
             <!-- Projects -->
-        @if(count($projects) > 0)
-            <section class="projects section-padding">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2 class="section-title">Our <span>Projects</span></h2>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="owl-carousel owl-theme">
-            @foreach($projects as $project)
-            @php
-            $link = route('project_detailed.page', $project->id);
-            @endphp
-                                <div class="item">
-                                    <div class="position-re o-hidden"> <img src="{{ url($project->image) }}" alt="{{ $project->name }}"> </div>
-                                    <div class="con">
-                                        <h6><a href="{{ ($project->details)? $link : '#!' }}">{{ $project->category }}</a></h6>
-                                        <h5><a href="{{ ($project->details)? $link : '#!' }}">{{ $project->name }}</a></h5>
-                                        <div class="line"></div>
-                                        <a href="{{ ($project->details)? $link : '#!' }}"><i class="ti-arrow-right"></i></a>
+@if(count($projects) > 0)
+    <!-- SOLUTION 1: Fixed Card Height (Recommended) -->
+    <section class="projects section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="section-title">RECENT <span>PROJECTS</span></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme">
+                        @foreach($projects as $project)
+                            <div class="item">
+                                <a href="{{ route('projects.show', $project['slug']) }}" style="text-decoration: none; display: block; cursor: pointer;">
+                                    <div class="services3" style="height: 200px; display: flex; flex-direction: column;">
+                                        <div class="services3-img-area">
+                                            <img src="{{ asset('frontend/assets/img/icons/Artboard-1.png') }}" alt="{{ $project['title'] }}">
+                                        </div>
+                                        <div class="services3-text-area" style="flex-grow: 1; display: flex; flex-direction: column;">
+                                            <h4 class="services3-heading" style="min-height: 60px; display: flex; align-items: center;">{{ $project['title'] }}</h4>
+                                            <p style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.5;">
+                                                {{ $project['location'] }} @if($project['project_type']) - {{ $project['project_type'] }}@endif
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-            @endforeach
+                                </a>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-            </section>
-            @endif
+            </div>
+        </div>
+    </section>
+
+    @push('scripts')
+        <script>
+            $(document).ready(function(){
+                $(".projects .owl-carousel").owlCarousel({
+                    loop: true,
+                    margin: 30,
+                    nav: true,
+                    dots: true,
+                    autoplay: true,
+                    autoplayTimeout: 5000,
+                    autoplayHoverPause: true,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        768: {
+                            items: 2
+                        },
+                        992: {
+                            items: 3
+                        }
+                    }
+                });
+            });
+        </script>
+    @endpush
+@endif
 
 <!-- Process -->
 <section class="process section-padding2">

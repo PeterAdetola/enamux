@@ -1,13 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Essential Meta Tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <!-- Primary Meta Tags -->
     <title>E N A M U X</title>
-    <link rel="shortcut icon" href="{{ asset('frontend/assets/img/favicon.ico') }}" />
+    <meta name="title" content="Enamux Limited | Civil & Structural Engineering Consultancy | Coren & Acen Solutions">
+    <meta name="description" content="Enamux Consulting Engineers - Expert civil and structural engineering consultancy since 2018. Specializing in high-rise buildings, bridge design, water resources, and transportation engineering. Coren and Acen trusted engineering solutions.">
+    <meta name="keywords" content="Enamux, Enamux Limited, Enamux Consulting Engineers, Coren, Acen, civil engineering, structural engineering, transportation engineering, water resources engineering, bridge design, high-rise building design, dam construction, BIM, Nigeria engineering consultancy">
+    <meta name="author" content="Enamux Limited">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.enamux.com" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://enamux.com">
+    <meta property="og:title" content="Enamux Limited | Leading Civil & Structural Engineering Consultancy">
+    <meta property="og:description" content="Enamux Consulting Engineers delivers excellence in structural, civil, transportation, and water resources engineering. Trusted Coren and Acen engineering solutions since 2018.">
+    <meta property="og:image" content="https://enamux.com/img/og-image.jpg">
+    <meta property="og:image:secure_url" content="https://enamux.com/img/og-image.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Enamux Limited - Civil and Structural Engineering Consultancy">
+    <meta property="og:site_name" content="Enamux Limited">
+    <meta property="og:locale" content="en_US">
+
+
+    <!-- Twitter -->
+{{--    <meta property="twitter:card" content="summary_large_image">--}}
+{{--    <meta property="twitter:url" content="https://www.enamux.com">--}}
+{{--    <meta property="twitter:title" content="Enamux Limited | Civil & Structural Engineering Consultancy">--}}
+{{--    <meta property="twitter:description" content="Expert civil and structural engineering consultancy specializing in high-rise buildings, bridges, water resources, and transportation infrastructure.">--}}
+{{--    <meta property="twitter:image" content="https://www.enamux.com/assets/img/enamux-twitter-image.jpg">--}}
+
+    <!-- Additional SEO Meta Tags -->
+    <meta name="geo.region" content="NG" />
+    <meta name="geo.placename" content="Nigeria" />
+    <meta name="format-detection" content="telephone=yes">
+    <meta name="theme-color" content="#BE996B">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Enamux Limited",
+        "alternateName": ["Enamux Consulting Engineers", "Enamux", "Coren", "Acen"],
+        "description": "Distinguished Civil and Structural Engineering consultancy firm delivering excellence in construction projects across Building, Civil, Transportation, and Water Resources Engineering since 2018.",
+        "foundingDate": "2018",
+        "url": "https://www.enamux.com",
+        "logo": "https://www.enamux.com/assets/img/logo.svg",
+        "image": "https://www.enamux.com/assets/img/banner.jpg",
+        "priceRange": "$$",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "NG"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "6.5244",
+            "longitude": "3.3792"
+        },
+        "sameAs": [
+            "https://www.linkedin.com/company/enamux",
+            "https://twitter.com/enamux"
+        ],
+        "serviceType": [
+            "Structural Engineering",
+            "Civil Engineering",
+            "Transportation Engineering",
+            "Water Resources Engineering",
+            "Environmental Engineering",
+            "Project Management"
+        ],
+        "areaServed": {
+            "@type": "Country",
+            "name": "Nigeria"
+        },
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Engineering Services",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Structural Engineering",
+                        "description": "High-rise building design, steel and concrete structural systems, foundation design"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Transportation Engineering",
+                        "description": "Highway design, bridge construction up to 280m span, railway infrastructure"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Water Resources Engineering",
+                        "description": "Dam design, irrigation systems, flood control, water supply schemes"
+                    }
+                }
+            ]
+        }
+    }
+    </script>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('frontend/assets/img/favicon/favicon.ico') }}" />
+    <link rel="icon" href="{{ asset('frontend/assets/img/favicon/icon.svg') }}" type="image/svg+xml" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('frontend/assets/img/favicon/favicon-180x180.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ asset('frontend/assets/img/favicon/favicon-192x192.png') }}">
+    <link rel="apple-touch-icon" sizes="512x512" href="{{ asset('frontend/assets/img/favicon/favicon-512x512.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('frontend/assets/img/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('frontend/assets/img/favicon/favicon-16x16.png') }}">
+
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}" />
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Custom Styles -->
     <style>
         .logo-svg {
             width: 160px;
@@ -18,7 +147,6 @@
         .logo-link:hover .logo-svg {
             color: #ffffff;
         }
-
     </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">

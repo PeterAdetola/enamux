@@ -49,7 +49,7 @@ if (Session::has('message') ) {
                         @endforeach
                             </p>
                     @if($contact->address)
-                            <p><b>Address :</b>&nbsp;&nbsp; {{ $contact->address }}</p>
+                                    <p><b>Address :</b>&nbsp;&nbsp; {{ strip_tags($contact->address) }}</p>
                     @endif
     @endforeach
                         </div>
@@ -92,11 +92,11 @@ if (Session::has('message') ) {
                         </div>
                     </div>
                     <!-- Map Section -->
-                    <!-- <div class="row">
+                    <div class="row">
                         <div class="col-md-12 mb-30 animate-box" data-animate-effect="fadeInUp">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13419.040333881774!2d-79.93218134282569!3d32.77209999120473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88fe7a1ae84ff639%3A0xe5c782f71924a526!2s24%20King%20St%2C%20Charleston%2C%20SC%2029401%2C%20Amerika%20Birle%C5%9Fik%20Devletleri!5e0!3m2!1str!2str!4v1635894790855!5m2!1str!2str" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" class="map"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.9537654876234!2d7.492312!3d6.450986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1044a3d020000000%3A0x0!2zNsKwMjcnMDMuNSJOIDfCsDI5JzMyLjMiRQ!5e0!3m2!1sen!2sng!4v1738329600000!5m2!1sen!2sng" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" class="map"></iframe>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </section>
 <script>
