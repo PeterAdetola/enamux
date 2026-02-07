@@ -219,12 +219,35 @@ function deployCode($repoFolder, $preservePaths) {
     $publicSource = APP_ROOT . '/public';
 
     if (is_dir($publicSource)) {
-        // Copy public files but preserve uploads and projects
-        $publicFiles = array_diff(scandir($publicSource), ['.', '..']);
+        // First, copy index.php with corrected paths
+        $indexContent = file_get_contents($publicSource . '/index.php');
+
+        // Replace paths to point to enamux_laravel
+        $indexContent = str_replace(
+            "require __DIR__.'/../vendor/autoload.php'",
+            "require __DIR__.'/../enamux_laravel/vendor/autoload.php'",
+            $indexContent
+        );
+        $indexContent = str_replace(
+            "require_once __DIR__.'/../bootstrap/app.php'",
+            "require_once __DIR__.'/../enamux_laravel/bootstrap/app.php'",
+            $indexContent
+        );
+        $indexContent = str_replace(
+            "__DIR__.'/../storage/framework/maintenance.php'",
+            "__DIR__.'/../enamux_laravel/storage/framework/maintenance.php'",
+            $indexContent
+        );
+
+        file_put_contents(PUBLIC_ROOT . '/index.php', $indexContent);
+        logMessage("Updated index.php with correct paths");
+
+        // Now copy other public files
+        $publicFiles = array_diff(scandir($publicSource), ['.', '..', 'index.php']);
 
         foreach ($publicFiles as $file) {
             if ($file === 'uploads' || $file === 'projects') {
-                continue; // Skip these
+                continue;
             }
 
             $src = $publicSource . '/' . $file;
@@ -233,7 +256,7 @@ function deployCode($repoFolder, $preservePaths) {
             if (is_dir($src)) {
                 recursiveCopy($src, $dst);
             } else {
-                copy($src, $dst);
+                @copy($src, $dst);
             }
         }
     }
