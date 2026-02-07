@@ -9,7 +9,7 @@
  * 3. Extracts to correct location
  * 4. Updates your site automatically
  *
- * Webhook URL: https://enamux.test/github-deploy.php
+ * Webhook URL: https://enamux.com/github-deploy.php
  */
 
 // ============================================
@@ -17,7 +17,7 @@
 // ============================================
 
 define('GITHUB_USERNAME', 'PeterAdetola');
-define('GITHUB_REPO', 'https://github.com/PeterAdetola/enamux');
+define('GITHUB_REPO', 'enamux');
 define('GITHUB_BRANCH', 'main'); // or 'master'
 define('WEBHOOK_SECRET', '58333e2ba0d4e3b0260dad1aa18111605e367a49fa3e2f6bc11974341926cc88'); // Generate with: openssl rand -hex 32
 
