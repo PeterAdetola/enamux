@@ -19,5 +19,5 @@ yarn-error.log
 /.idea
 /.vscode
 public/projects.zip
-public/project-files/
+public/projects/
 public/uploads/

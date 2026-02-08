@@ -9,7 +9,7 @@ class ProjectGalleryParser
 {
     protected $projectSlug;
     protected $projectPath;
-    protected $storageDisk = 'public_direct'; // Using direct public folder access
+    protected $storageDisk = 'public'; // Changed from 'project-files' to 'public'
     protected $metadata = [];
     protected $content = '';
     protected $galleries = [];
@@ -17,28 +17,19 @@ class ProjectGalleryParser
     public function __construct($projectSlug)
     {
         $this->projectSlug = $projectSlug;
-        $this->projectPath = "projects/{$projectSlug}";
+        $this->projectPath = "project-files/{$projectSlug}";
     }
 
     public function parse()
     {
-        // Check public directory first
-        $publicPath = public_path("{$this->projectPath}/project.md");
+        // Use storage/app/public/project-files directory (NEW LOCATION)
+        $storagePath = storage_path("app/public/project-files/{$this->projectSlug}/project.md");
 
-        if (file_exists($publicPath)) {
-            $content = file_get_contents($publicPath);
-            $this->storageDisk = 'public_direct'; // Flag for direct public access
-        } else {
-            // Fallback to storage if needed
-            $markdownPath = "{$this->projectPath}/project.md";
-
-            if (!Storage::disk('local')->exists($markdownPath)) {
-                throw new \Exception("Project markdown file not found in public or storage: {$markdownPath}");
-            }
-
-            $content = Storage::disk('local')->get($markdownPath);
-            $this->storageDisk = 'local';
+        if (!file_exists($storagePath)) {
+            throw new \Exception("Project markdown file not found: {$storagePath}");
         }
+
+        $content = file_get_contents($storagePath);
 
         // Parse YAML frontmatter
         $this->parseFrontmatter($content);
@@ -167,8 +158,8 @@ class ProjectGalleryParser
             $columnClass = $this->getColumnClass($gallery['columns']);
 
             foreach ($gallery['images'] as $imagePath) {
-                // Use direct public path (no storage/ prefix needed)
-                $fullImageUrl = asset("{$this->projectPath}/images/{$imagePath}");
+                // Use Storage::url() for environment-agnostic URLs
+                $fullImageUrl = Storage::url("project-files/{$this->projectSlug}/images/{$imagePath}");
 
                 $html .= <<<HTML
                     <div class="{$columnClass} gallery-item">
@@ -212,8 +203,8 @@ HTML;
             $columnClass = $this->getColumnClass($gallery['columns']);
 
             foreach ($gallery['images'] as $imagePath) {
-                // Use direct public path (no storage/ prefix needed)
-                $fullImageUrl = asset("{$this->projectPath}/images/{$imagePath}");
+                // Use Storage::url() for environment-agnostic URLs
+                $fullImageUrl = Storage::url("project-files/{$this->projectSlug}/images/{$imagePath}");
 
                 $html .= <<<HTML
                     <div class="{$columnClass} gallery-item">
@@ -250,31 +241,33 @@ HTML;
     {
         $projects = [];
 
-        // Check public directory first
-        $publicProjectsDir = public_path('projects');
+        // Check storage/app/public/project-files directory (NEW LOCATION)
+        $projectsDir = storage_path('app/public/project-files');
 
-        if (is_dir($publicProjectsDir)) {
-            $dirs = scandir($publicProjectsDir);
-            foreach ($dirs as $dir) {
-                if ($dir === '.' || $dir === '..') continue;
+        if (!is_dir($projectsDir)) {
+            return $projects;
+        }
 
-                $fullPath = $publicProjectsDir . '/' . $dir;
-                if (is_dir($fullPath)) {
-                    try {
-                        $parser = new self($dir);
-                        $parser->parse();
-                        $projects[] = [
-                            'slug' => $dir,
-                            'title' => $parser->getMetadata('title'),
-                            'location' => $parser->getMetadata('location'),
-                            'project_type' => $parser->getMetadata('project_type'),
-                            'icon' => $parser->getMetadata('icon') ?? 'img/icons/icon-1.png',
-                            'order' => (int) ($parser->getMetadata('order') ?? 999), // Default to 999 if no order set
-                        ];
-                    } catch (\Exception $e) {
-                        // Skip invalid projects
-                        continue;
-                    }
+        $dirs = scandir($projectsDir);
+        foreach ($dirs as $dir) {
+            if ($dir === '.' || $dir === '..') continue;
+
+            $fullPath = $projectsDir . '/' . $dir;
+            if (is_dir($fullPath)) {
+                try {
+                    $parser = new self($dir);
+                    $parser->parse();
+                    $projects[] = [
+                        'slug' => $dir,
+                        'title' => $parser->getMetadata('title'),
+                        'location' => $parser->getMetadata('location'),
+                        'project_type' => $parser->getMetadata('project_type'),
+                        'icon' => $parser->getMetadata('icon') ?? 'frontend/assets/img/icons/Artboard-1.png',
+                        'order' => (int) ($parser->getMetadata('order') ?? 999),
+                    ];
+                } catch (\Exception $e) {
+                    // Skip invalid projects
+                    continue;
                 }
             }
         }
