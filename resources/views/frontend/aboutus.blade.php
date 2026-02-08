@@ -4,8 +4,17 @@
         $about = App\Models\AboutSummary::first();
         $members = App\Models\TeamMember::all();
     @endphp
-
-        <!-- About Summary (Existing - From Database) -->
+    <style>
+        @media (max-width: 768px) {
+            .process2 .number {
+                position: static !important;
+                display: block !important;
+                text-align: left !important;
+                opacity: 0.3 !important;
+                margin-bottom: 0.3em !important;
+            }
+        }
+    </style>        <!-- About Summary (Existing - From Database) -->
     <section class="about section-padding2">
         <div class="container">
             <div class="row">
@@ -319,32 +328,32 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
-                    <div class="process2 item mb-30"> <i class="number">01</i>
+                <div class="col-md-3 col-sm-6 mb-30">
+                    <div class="process2 item"> <i class="number">01</i>
                         <div class="icon"> <i class="flaticon-medal"></i> </div>
                         <h3>Excellence</h3>
                         <div class="line"></div>
                         <p>Delivering projects that exceed expectations through meticulous attention to detail, innovative solutions, and unwavering commitment to quality in every aspect of our work.</p>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="process2 item mb-30"> <i class="number">02</i>
+                <div class="col-md-3 col-sm-6 mb-30">
+                    <div class="process2 item"> <i class="number">02</i>
                         <div class="icon"> <i class="flaticon-quality"></i> </div>
                         <h3>Integrity</h3>
                         <div class="line"></div>
                         <p>Maintaining the highest professional standards through transparent communication, ethical practices, and honest dealings with all stakeholders in every project we undertake.</p>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="process2 item mb-30"> <i class="number">03</i>
+                <div class="col-md-3 col-sm-6 mb-30">
+                    <div class="process2 item"> <i class="number">03</i>
                         <div class="icon"> <i class="flaticon-idea"></i> </div>
                         <h3>Innovation</h3>
                         <div class="line"></div>
                         <p>Leveraging cutting-edge technology and creative engineering solutions to deliver optimal results while continuously improving our methods and approaches to solve complex challenges.</p>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="process2 item mb-30"> <i class="number">04</i>
+                <div class="col-md-3 col-sm-6 mb-30">
+                    <div class="process2 item"> <i class="number">04</i>
                         <div class="icon"> <i class="flaticon-security"></i> </div>
                         <h3>Safety</h3>
                         <div class="line"></div>
@@ -496,16 +505,129 @@
                 color: #c0996b;
             }
 
+            /* Our Values - Mobile Responsive */
+            .process2 {
+                position: relative;
+            }
+
+            .process2 .number {
+                font-size: 3em !important;
+                position: absolute;
+                top: 0.5em;
+                right: 0.5em;
+                opacity: 0.1;
+                font-weight: 700;
+                line-height: 1;
+            }
+
+            .process2 h3 {
+                font-family: 'Oswald', sans-serif;
+                font-size: 1.5em !important;
+                font-weight: 400;
+                text-transform: uppercase;
+                letter-spacing: 0.15em;
+                color: #fff;
+                margin-top: 1em;
+                margin-bottom: 0.8em;
+                line-height: 1.2;
+                word-wrap: break-word;
+            }
+
+            .process2 p {
+                font-family: 'Merriweather', serif;
+                font-size: 0.9em;
+                line-height: 1.7em;
+                color: #999;
+            }
+
             /* Responsive */
             @media (max-width: 768px) {
                 .stats-grid {
                     grid-template-columns: 1fr;
+                }
+
+                /* Our Values Mobile Fix - Number at Top */
+                .process2 {
+                    padding: 1em 1.5em 1.5em 1.5em;
+                    margin-bottom: 1.5em;
+                }
+
+                .process2 .number {
+                    position: static !important; /* Remove absolute positioning */
+                    display: block;
+                    font-size: 2.5em !important;
+                    opacity: 0.3;
+                    margin-bottom: 0.3em;
+                    text-align: left;
+                }
+
+                .process2 .icon {
+                    font-size: 2em;
+                    margin-top: 0;
+                }
+
+                .process2 h3 {
+                    font-size: 1.3em !important;
+                    letter-spacing: 0.1em;
+                    margin-top: 0.5em;
+                    padding-right: 0; /* Remove padding since number is now on top */
+                }
+
+                .process2 p {
+                    font-size: 0.875em;
+                }
+
+                /* Certifications heading - reduce font size on mobile */
+                .section-title {
+                    font-size: 1.8em !important;
+                    letter-spacing: 0.15em !important;
+                    word-spacing: 0.2em !important;
                 }
             }
 
             @media (max-width: 992px) and (min-width: 769px) {
                 .stats-grid {
                     grid-template-columns: repeat(2, 1fr);
+                }
+
+                /* Tablet - 2 columns for Our Values */
+                .process2 h3 {
+                    font-size: 1.4em !important;
+                    letter-spacing: 0.12em;
+                }
+
+                .process2 .number {
+                    font-size: 2.8em !important;
+                }
+
+                /* Certifications heading - slightly smaller on tablet */
+                .section-title {
+                    font-size: 2em !important;
+                    letter-spacing: 0.2em !important;
+                }
+            }
+
+            @media (max-width: 576px) {
+                /* Small mobile - even more compact */
+                .process2 {
+                    padding: 1em;
+                }
+
+                .process2 .number {
+                    font-size: 2em !important;
+                    margin-bottom: 0.2em;
+                }
+
+                .process2 h3 {
+                    font-size: 1.2em !important;
+                    letter-spacing: 0.08em;
+                }
+
+                /* Certifications heading - smallest on small mobile */
+                .section-title {
+                    font-size: 1.5em !important;
+                    letter-spacing: 0.1em !important;
+                    word-spacing: 0.15em !important;
                 }
             }
         </style>
