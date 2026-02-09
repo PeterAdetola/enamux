@@ -197,7 +197,7 @@ APP_URL=https://enamux.test
 
 # Database
 DB_CONNECTION=mysql
-DB_DATABASE=enamux
+DB_DATABASE=enamux_db
 
 # Mail (if needed)
 MAIL_MAILER=smtp
