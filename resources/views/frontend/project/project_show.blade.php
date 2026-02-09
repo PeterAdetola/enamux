@@ -10,6 +10,32 @@
         // Parse the project markdown
         $project = new ProjectGalleryParser($projectSlug);
         $project->parse();
+
+        // Get all projects for navigation
+        $allProjects = getProjects();
+
+        // Find current project index
+        $currentIndex = null;
+        foreach ($allProjects as $index => $proj) {
+            if ($proj['slug'] === $projectSlug) {
+                $currentIndex = $index;
+                break;
+            }
+        }
+
+        // Get prev and next projects
+        $prevProject = null;
+        $nextProject = null;
+
+        if ($currentIndex !== null) {
+            // Previous project (wrap around to last if at beginning)
+            $prevIndex = $currentIndex > 0 ? $currentIndex - 1 : count($allProjects) - 1;
+            $prevProject = $allProjects[$prevIndex];
+
+            // Next project (wrap around to first if at end)
+            $nextIndex = $currentIndex < count($allProjects) - 1 ? $currentIndex + 1 : 0;
+            $nextProject = $allProjects[$nextIndex];
+        }
     @endphp
 
         <!-- Project Details -->
@@ -80,6 +106,36 @@
             </div>
 
             {!! $project->generateGalleryHtmlWithSections() !!}
+        </div>
+    </section>
+
+    <!-- Prev-Next Projects -->
+    <section class="projects-prev-next">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                        @if($prevProject)
+                            <div class="projects-prev-next-left">
+                                <a href="{{ route('projects.show', $prevProject['slug']) }}" title="{{ $prevProject['title'] }}">
+                                    <i class="ti-arrow-left"></i> Previous Project</a>
+                            </div>
+                        @else
+                            <div class="projects-prev-next-left">
+                                <!-- Empty div to maintain spacing -->
+                            </div>
+                        @endif
+                        <a href="{{ route('projects.page') }}" title="View All Projects"><i class="ti-layout-grid3-alt"></i></a>
+                        @if($nextProject)
+                            <div class="projects-prev-next-right"> <a href="{{ route('projects.show', $nextProject['slug']) }}" title="{{ $nextProject['title'] }}">Next Project <i class="ti-arrow-right"></i></a> </div>
+                        @else
+                            <div class="projects-prev-next-right">
+                                <!-- Empty div to maintain spacing -->
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
